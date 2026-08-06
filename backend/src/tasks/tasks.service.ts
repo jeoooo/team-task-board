@@ -4,6 +4,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { FindTasksQueryDto } from './dto/find-tasks-query.dto';
+import { TASK_WITH_ASSIGNEE } from './tasks.constants';
 
 @Injectable()
 export class TasksService {
@@ -17,7 +18,7 @@ export class TasksService {
         status: dto.status,
         assigneeId: dto.assigneeId,
       },
-      include: { assignee: true },
+      include: TASK_WITH_ASSIGNEE,
     });
   }
 
@@ -27,7 +28,7 @@ export class TasksService {
         status: query.status,
         assigneeId: query.assigneeId === 'unassigned' ? null : query.assigneeId,
       },
-      include: { assignee: true },
+      include: TASK_WITH_ASSIGNEE,
       orderBy: { createdAt: 'desc' },
     });
   }
@@ -35,7 +36,7 @@ export class TasksService {
   async findOne(id: string) {
     const task = await this.prisma.task.findUnique({
       where: { id },
-      include: { assignee: true },
+      include: TASK_WITH_ASSIGNEE,
     });
     if (!task) {
       throw new NotFoundException(`Task ${id} not found`);
@@ -48,7 +49,7 @@ export class TasksService {
     return this.prisma.task.update({
       where: { id },
       data: dto,
-      include: { assignee: true },
+      include: TASK_WITH_ASSIGNEE,
     });
   }
 
@@ -57,7 +58,7 @@ export class TasksService {
     return this.prisma.task.update({
       where: { id },
       data: { status: dto.status },
-      include: { assignee: true },
+      include: TASK_WITH_ASSIGNEE,
     });
   }
 
