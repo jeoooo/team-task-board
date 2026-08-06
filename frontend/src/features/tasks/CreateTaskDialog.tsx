@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { createTask } from './tasksSlice';
+import { AssigneeMenuItems } from './AssigneeMenuItems';
 
 export function CreateTaskDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const dispatch = useAppDispatch();
@@ -86,11 +87,7 @@ export function CreateTaskDialog({ open, onClose }: { open: boolean; onClose: ()
             fullWidth
           >
             <MenuItem value="">Unassigned</MenuItem>
-            {users.map((user) => (
-              <MenuItem key={user.id} value={user.id}>
-                {user.name}
-              </MenuItem>
-            ))}
+            <AssigneeMenuItems users={users} />
           </Select>
         </Stack>
       </DialogContent>

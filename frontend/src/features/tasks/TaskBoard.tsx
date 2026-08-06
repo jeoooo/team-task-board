@@ -19,6 +19,7 @@ import { fetchTasks, setAssigneeFilter } from './tasksSlice';
 import { STATUS_COLUMNS } from './statusMeta';
 import { TaskColumn } from './TaskColumn';
 import { CreateTaskDialog } from './CreateTaskDialog';
+import { AssigneeMenuItems } from './AssigneeMenuItems';
 
 export function TaskBoard() {
   const dispatch = useAppDispatch();
@@ -70,11 +71,7 @@ export function TaskBoard() {
           >
             <MenuItem value="all">All assignees</MenuItem>
             <MenuItem value="unassigned">Unassigned</MenuItem>
-            {users.map((user) => (
-              <MenuItem key={user.id} value={user.id}>
-                {user.name}
-              </MenuItem>
-            ))}
+            <AssigneeMenuItems users={users} />
           </Select>
         </Stack>
 
